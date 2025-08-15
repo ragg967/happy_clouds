@@ -1,0 +1,91 @@
+# Build artifacts
+build/
+bin/
+obj/
+dist/
+main
+
+# Object files and executables
+*.o
+*.out
+*.exe
+*.so
+*.a
+*.lib
+*.dll
+*.dylib
+
+# Debug files
+*.dSYM/
+*.su
+*.d
+*.pdb
+*.idb
+core
+core.*
+gmon.out
+
+# Coverage and profiling
+*.gcno
+*.gcda
+*.gcov
+
+# Valgrind files
+*.valgrind
+vgcore.*
+
+# Editor files
+*.swp
+*~
+.vscode/
+.idea/
+*.sublime-*
+.clangd/
+compile_commands.json
+
+# Linux specific
+.fuse_hidden*
+.directory
+.Trash-*
+
+# macOS specific
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Windows specific
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Personal notes
+TODO.md
+NOTES.md
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+Makefile.*
+*.cmake
+
+# Conan
+conanfile.txt
+conaninfo.txt
+conanbuildinfo.*
+
+# Package managers
+vcpkg_installed/
+.packages/
+
+# Project specific
+.raylib-src/
