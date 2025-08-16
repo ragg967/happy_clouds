@@ -89,3 +89,8 @@ vcpkg_installed/
 
 # Project specific
 .raylib-src/
+*.h
+*.wasm
+*.js
+*.html
+*.data

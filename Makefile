@@ -24,16 +24,15 @@
 .PHONY: all clean
 
 # Define required raylib variables
-PROJECT_NAME       ?= game
+PROJECT_NAME       ?= happyClouds
 RAYLIB_VERSION     ?= 5.1-dev
-RAYLIB_PATH        ?= ..\..
-
+RAYLIB_PATH        ?= .
 # Define compiler path on Windows
 COMPILER_PATH      ?= C:/raylib/w64devkit/bin
 
 # Define default options
 # One of PLATFORM_DESKTOP, PLATFORM_ANDROID, PLATFORM_WEB
-PLATFORM           ?= PLATFORM_DESKTOP
+PLATFORM           ?= PLATFORM_WEB
 
 # Locations of your newly installed library and associated headers. See ../src/Makefile
 # On Linux, if you have installed raylib but cannot compile the examples, check that
@@ -116,13 +115,10 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
 endif
 
 ifeq ($(PLATFORM),PLATFORM_WEB)
-    # Emscripten required variables
-    EMSDK_PATH         ?= C:/raylib/emsdk
-    EMSCRIPTEN_PATH    ?= $(EMSDK_PATH)/upstream/emscripten
-    CLANG_PATH          = $(EMSDK_PATH)/upstream/bin
-    PYTHON_PATH         = $(EMSDK_PATH)/python/3.9.2-nuget_64bit
-    NODE_PATH           = $(EMSDK_PATH)/node/20.18.0_64bit/bin
-    export PATH         = $(EMSDK_PATH);$(EMSCRIPTEN_PATH);$(CLANG_PATH);$(NODE_PATH);$(PYTHON_PATH):$$(PATH)
+    # Emscripten required variables for Linux
+    EMSDK_PATH         ?= /usr/lib/emscripten
+    EMSCRIPTEN_PATH    ?= $(EMSDK_PATH)
+    export PATH        := $(EMSCRIPTEN_PATH):$(PATH)
 endif
 
 # Define raylib release directory for compiled library.
@@ -172,7 +168,7 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
 endif
 
 # Define default make program: Mingw32-make
-MAKE = mingw32-make
+MAKE = make
 
 ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),LINUX)
@@ -181,6 +177,9 @@ ifeq ($(PLATFORM),PLATFORM_DESKTOP)
     ifeq ($(PLATFORM_OS),OSX)
         MAKE = make
     endif
+endif
+ifeq ($(PLATFORM),PLATFORM_WEB)
+    MAKE = make
 endif
 
 # Define compiler flags:
@@ -244,14 +243,13 @@ ifeq ($(PLATFORM),PLATFORM_WEB)
         CFLAGS += -sASSERTIONS=1 --profiling
     endif
 
-    # Define a custom shell .html and output extension
-    CFLAGS += --shell-file $(RAYLIB_PATH)/src/shell.html
+    # Define output extension
     EXT = .html
 endif
 
 # Define include paths for required headers
 # NOTE: Several external required libraries (stb and others)
-INCLUDE_PATHS = -I. -I$(RAYLIB_PATH)/src -I$(RAYLIB_PATH)/src/external
+INCLUDE_PATHS = -I.
 
 # Define additional directories containing required header files
 ifeq ($(PLATFORM),PLATFORM_RPI)
@@ -343,7 +341,7 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
     # Libraries for web (HTML5) compiling
-    LDLIBS = $(RAYLIB_RELEASE_PATH)/libraylib.a
+    LDLIBS = ./libraylib.web.a
 endif
 
 # Define a recursive wildcard function
@@ -401,7 +399,6 @@ ifeq ($(PLATFORM),PLATFORM_RPI)
 	rm -fv *.o
 endif
 ifeq ($(PLATFORM),PLATFORM_WEB)
-	del *.o *.html *.js
+	rm -f *.o *.html *.js *.wasm *.data
 endif
 	@echo Cleaning done
-

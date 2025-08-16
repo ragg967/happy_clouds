@@ -56,7 +56,26 @@
             "cStandard": "c11",
             "cppStandard": "c++14",
             "intelliSenseMode": "clang-x64"
-
+        },
+        {
+            "name": "Emscripten",
+            "includePath": [
+                "/usr/lib/emscripten/system/include/**",
+                "/usr/lib/emscripten/system/include/emscripten/**",
+                "/usr/lib/emscripten/system/lib/libc/musl/include/**",
+                "<path_to_raylib>/src/**",
+                "${workspaceFolder}/**"
+            ],
+            "defines": [
+                "__EMSCRIPTEN__",
+                "EMSCRIPTEN",
+                "PLATFORM_WEB",
+                "GRAPHICS_API_OPENGL_ES2"
+            ],
+            "compilerPath": "/usr/lib/emscripten/emcc",
+            "cStandard": "c99",
+            "cppStandard": "c++14",
+            "intelliSenseMode": "clang-x64"
         }
     ],
     "version": 4
